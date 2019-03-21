@@ -10,6 +10,7 @@ launch the roscore：
 
 <code>
 roscore
+  
 rosrun rosserial_python serial_node.py /dev/ttyUSB0
 </code>
 

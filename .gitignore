@@ -3,3 +3,5 @@
 rosserial_server/doc/
 *.out
 *.geany
+
+.vscode/*

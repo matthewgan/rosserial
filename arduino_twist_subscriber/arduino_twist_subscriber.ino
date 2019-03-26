@@ -10,8 +10,8 @@
 
 #define MAX_SPEED_M_PER_S   2.0
 #define NETRUAL_POINT   1500
-#define LOW_DEADZONE    1200    //need calibrate
-#define HIGH_DEADZONE   1800    //need calibrate
+#define LOW_DEADZONE    1300    //need calibrate
+#define HIGH_DEADZONE   1700    //need calibrate
 
 ros::NodeHandle nh;
 
@@ -156,4 +156,5 @@ int custommap(float range)
   {
     value = map(range, -MAX_SPEED_M_PER_S, 0.0f, 1000, LOW_DEADZONE);
   }
+  return value;
 }

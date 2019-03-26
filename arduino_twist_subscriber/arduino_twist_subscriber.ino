@@ -13,6 +13,8 @@
 #define LOW_DEADZONE    1300    //need calibrate
 #define HIGH_DEADZONE   1700    //need calibrate
 
+#define MAP_RATIO       1000    //ratio for avoid map long range problem
+
 ros::NodeHandle nh;
 
 Servo motor_left;
@@ -150,11 +152,11 @@ int custommap(float range)
   }
   else if(range > 0)
   {
-    value = map(range, 0.0f, MAX_SPEED_M_PER_S, HIGH_DEADZONE, 2000);
+    value = map(range*MAP_RATIO, 0.0f*MAP_RATIO, MAX_SPEED_M_PER_S*MAP_RATIO, HIGH_DEADZONE, 2000);
   }
   else
   {
-    value = map(range, -MAX_SPEED_M_PER_S, 0.0f, 1000, LOW_DEADZONE);
+    value = map(range*MAP_RATIO, -MAX_SPEED_M_PER_S*MAP_RATIO, 0.0f*MAP_RATIO, 1000, LOW_DEADZONE);
   }
   return value;
 }

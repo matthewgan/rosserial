@@ -75,8 +75,8 @@ void movement(float x_vel, float z_ang)
     }
     else
     {
-        left = x_vel - z_ang * wheel_track / 2;
-        right = x_vel + z_ang * wheel_track / 2;
+        left = x_vel - (z_ang * wheel_track / 2);
+        right = x_vel + (z_ang * wheel_track / 2);
     }
 
     //due to different surface of the ground
@@ -109,12 +109,14 @@ float limitSpeed(float spd)
 
 void setMotorSpeed(float ls, float rs)
 {
-    int lp = map(ls, -MAX_SPEED_M_PER_S, MAX_SPEED_M_PER_S, 1000, 2000);
-    int rp = map(rs, -MAX_SPEED_M_PER_S, MAX_SPEED_M_PER_S, 1000, 2000);
-
-    //remove dead zone of motor and config the output
-    motor_left.writeMicroseconds(removeDeadZone(lp));
-    motor_right.writeMicroseconds(removeDeadZone(rp));
+//    int lp = map(ls, -MAX_SPEED_M_PER_S, MAX_SPEED_M_PER_S, 1000, 2000);
+//    int rp = map(rs, -MAX_SPEED_M_PER_S, MAX_SPEED_M_PER_S, 1000, 2000);
+//
+//    //remove dead zone of motor and config the output
+//    motor_left.writeMicroseconds(removeDeadZone(lp));
+//    motor_right.writeMicroseconds(removeDeadZone(rp));
+      motor_left.writeMicroseconds(custommap(ls));
+      motor_right.writeMicroseconds(custommap(rs));
 }
 
 int removeDeadZone(int pulse)
@@ -137,4 +139,21 @@ void setMotorStop()
 {
     motor_left.writeMicroseconds(NETRUAL_POINT);
     motor_right.writeMicroseconds(NETRUAL_POINT);
+}
+
+int custommap(float range)
+{
+  int value = 0;
+  if(range == 0)
+  {
+    value = NETRUAL_POINT;
+  }
+  else if(range > 0)
+  {
+    value = map(range, 0.0f, MAX_SPEED_M_PER_S, HIGH_DEADZONE, 2000);
+  }
+  else
+  {
+    value = map(range, -MAX_SPEED_M_PER_S, 0.0f, 1000, LOW_DEADZONE);
+  }
 }
